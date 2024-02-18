@@ -1509,7 +1509,7 @@ class FEM3D:
     #         elif self.t >= 3600:
     #             print(f'Time taken: {self.t / 60} min')
 
-    def optimize_source_receiver_pos(self,geometry_points, geometry_height, geometry_angle, num_freq, num_grid_pts,star_average=True,fmin=20,fmax=200,max_distance_from_wall=0.5,method='direct',
+    def optimize_source_receiver_pos(self, grid, num_grid_pts,star_average=True,fmin=20,fmax=200,max_distance_from_wall=0.5,method='direct',
                                      minimum_distance_between_speakers=1.2,speaker_receiver_height=1.2,min_distance_from_backwall=0.6,
                                      max_distance_from_backwall=1.5,neigs=50,
                                      plot_geom=False,renderer=None,plot_evaluate=False, plotBest=False,
@@ -1566,10 +1566,7 @@ class FEM3D:
         """
         print('Initializing optimization')
         then = time.time()
-        _Grid = fd.GeometryGenerator(self.AP, np.amax(self.freq), num_freq)
-        _Grid.generate_symmetric_polygon_variheight(
-            geometry_points, geometry_height, geometry_angle)
-        sC,rC = fd.r_s_from_grid(_Grid,num_grid_pts,star_average=star_average,
+        sC,rC = fd.r_s_from_grid(grid,num_grid_pts,star_average=star_average,
                                  max_distance_from_wall=max_distance_from_wall,
                                  minimum_distance_between_speakers=minimum_distance_between_speakers,
                                  speaker_receiver_height = speaker_receiver_height,
@@ -1599,28 +1596,24 @@ class FEM3D:
         fom = []
         
 
-        # Grid = fd.GeometryGenerator(self.AP,np.amax(self.freq),num_freq).generate_symmetric_polygon_variheight(geometry_points,geometry_height,geometry_angle)
-        # Grid = fd.GridImport3D(self.AP, self.path_to_geo_unrolled, S=self.S, R=self.R, fmax = self.grid.fmax, num_freq = self.grid.num_freq, order=self.order, plot=True)
-        Grid = fd.GeometryGenerator(self.AP, np.amax(self.freq), num_freq)
-        Grid.generate_symmetric_polygon_variheight(
-            geometry_points, geometry_height, geometry_angle)
-        self.nos = Grid.nos
-        self.elem_surf = Grid.elem_surf
-        self.elem_vol = Grid.elem_vol
-        self.domain_index_surf =  Grid.domain_index_surf
-        self.domain_index_vol = Grid.domain_index_vol
-        self.number_ID_faces = Grid.number_ID_faces
-        self.number_ID_vol = Grid.number_ID_vol
-        self.NumNosC = Grid.NumNosC
-        self.NumElemC = Grid.NumElemC
-        self.order = Grid.order
+        
+        self.nos = grid.nos
+        self.elem_surf = grid.elem_surf
+        self.elem_vol = grid.elem_vol
+        self.domain_index_surf =  grid.domain_index_surf
+        self.domain_index_vol = grid.domain_index_vol
+        self.number_ID_faces = grid.number_ID_faces
+        self.number_ID_vol = grid.number_ID_vol
+        self.NumNosC = grid.NumNosC
+        self.NumElemC = grid.NumElemC
+        self.order = grid.order
 
         
         self.pOptim = []
         pOptim = []
         fom = []
         fig = plt.figure(figsize=(12,8))
-        Grid.plot_mesh()
+        grid.plot_mesh()
         if method != 'None':
             if method == 'modal':
                 self.eigenfrequency(neigs,timeit=False)
@@ -1694,6 +1687,7 @@ class FEM3D:
                     
         
         return self.pOptim
+
             
     
     def eigenfrequency(self,neigs=12,near_freq=None,timeit=True):
