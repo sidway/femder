@@ -2941,11 +2941,11 @@ class FEM3D:
             fig, ax = plt.subplots(figsize=figsize)
 
             curve = self.hjwdB_average_rLw[idx_min:idx_max + 1]
-            ax.semilogx(freq, curve, linewidth=8, label=f'Average WMR rLW | SD: {np.std(curve):.2f} [dB]')
+            ax.semilogx(freq, curve, linewidth=8, label=f'Average WMR rLW | SD: {np.std(curve)} [dB]')
 
             ax.semilogx(self.wfreq[widx_min:widx_max + 1], self.whjwdB_average_rLw[widx_min:widx_max + 1],
                         linewidth=6, label=f'Average SBIR rLW| SD: '
-                                           f'{np.std(self.whjwdB_average_rLw[widx_min:widx_max + 1]):.2f} [dB]')
+                                           f'{np.std(self.whjwdB_average_rLw[widx_min:widx_max + 1])} [dB]')
             ax.semilogx(freq, reference_curve, label='Reference Curve [dB]', color='r', linestyle=':', alpha=0.8,
                         linewidth=2)
             ax.fill_between(freq, curve, reference_curve, where=(reference_curve > curve), color='r', alpha=0.5)
