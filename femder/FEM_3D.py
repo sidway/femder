@@ -2802,7 +2802,7 @@ class FEM3D:
         rC = self.R.coord
         if self.pR is None and self.pm is not None:
             self.pR = self.pm
-        std_dev = np.std(p2SPL(self.pR),axis=0)
+        stdev = np.std(p2SPL(self.pR),axis=0)
         
         self.fmin = fmin
         self.fmax = fmax
