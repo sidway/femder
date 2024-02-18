@@ -1613,7 +1613,6 @@ class FEM3D:
         pOptim = []
         fom = []
         fig = plt.figure(figsize=(12,8))
-        grid.plot_mesh()
         if method != 'None':
             if method == 'modal':
                 self.eigenfrequency(neigs,timeit=False)
