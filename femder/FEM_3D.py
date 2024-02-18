@@ -2814,19 +2814,19 @@ class FEM3D:
         freq = self.freq[idx_min:idx_max + 1]
         pRdB = p2SPL(self.pR.T)
         
-        std_dev = np.std(p2SPL(self.pR),axis=0)
+        stdev = np.std(p2SPL(self.pR),axis=0)
         wstd_dev = np.std(sbir_spl, axis=0)
         modes = [first_cuboid_mode(max(self.nos[:, 0]), max(self.nos[:, 1]), max(self.nos[:, 2]),self.c0)]
         if len(rC)>1:
             self.hjwdB_average_rLw = np.mean(pRdB,axis=0)
             self.whjwdB_average_rLw = np.mean(sbir_spl,axis=0)
-            self.std_dev_average_rLw  = np.mean(std_dev)
+            self.std_dev_average_rLw  = np.mean(stdev)
             self.wstd_dev_average_rLw = np.mean(wstd_dev)
     
         else:
             self.hjwdB_average_rLw = pRdB.flatten()
             self.whjwdB_average_rLw = np.array(sbir_spl).flatten()
-            self.std_dev_average_rLw = std_dev[0]
+            self.std_dev_average_rLw = stdev[0]
             self.wstd_dev_average_rLw = wstd_dev[0]
             
         # Reference curve
