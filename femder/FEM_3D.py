@@ -172,7 +172,7 @@ def IR(complex_pressure,AC,fmin,fmax):
     return r
 @jit
 def coord_interpolation(nos,elem_vol,coord,pN):
-    #coord = np.array(coord)
+    coord = np.array(coord)
     pelem,pind = prob_elem(nos, elem_vol, coord)
     indx = which_tetra(nos,pelem,coord)
     indx = pind[indx]
