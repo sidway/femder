@@ -1256,14 +1256,14 @@ class FEM3D:
         
         then = time.time()
         # if isinstance(self.c0, complex) or isinstance(self.rho0, complex):
-        #     self.H = np.zeros([self.NumNosC,self.NumNosC],dtype =  np.cfloat)
-        #     self.Q = np.zeros([self.NumNosC,self.NumNosC],dtype =  np.cfloat)
+        #     self.H = np.zeros([self.NumNosC,self.NumNosC],dtype =  )
+        #     self.Q = np.zeros([self.NumNosC,self.NumNosC],dtype =  )
 
         # else:
-        #     self.H = np.zeros([self.NumNosC,self.NumNosC],dtype =  np.cfloat)
-        #     self.Q = np.zeros([self.NumNosC,self.NumNosC],dtype =  np.cfloat)
-        # self.A = np.zeros([self.NumNosC,self.NumNosC,len(self.number_ID_faces)],dtype =  np.cfloat)
-        self.q = np.zeros([self.NumNosC,1],dtype = np.cfloat)
+        #     self.H = np.zeros([self.NumNosC,self.NumNosC],dtype =  )
+        #     self.Q = np.zeros([self.NumNosC,self.NumNosC],dtype =  )
+        # self.A = np.zeros([self.NumNosC,self.NumNosC,len(self.number_ID_faces)],dtype =  )
+        self.q = np.zeros([self.NumNosC,1],dtype = np.complex128)
         self.areas = compute_areas(self.nos, self.elem_surf)
         if len(self.rho) == 0:
             if self.H is None:
@@ -1303,7 +1303,7 @@ class FEM3D:
                 if len(self.v) == 0:
                     for N in tqdm(range(len(self.freq))):
                         # ps = solve_damped_system(self.Q, self.H, self.A, self.number_ID_faces, self.mu, self.w, q, N)
-                        # Ag = np.zeros_like(self.Q,dtype=np.cfloat)
+                        # Ag = np.zeros_like(self.Q,dtype=np.complex128)
                         i = 0
                         Ag = 0
                         for bl in self.number_ID_faces:
@@ -1321,11 +1321,11 @@ class FEM3D:
                     
                     for N in tqdm(range(len(self.freq))):
                     # ps = solve_damped_system(self.Q, self.H, self.A, self.number_ID_faces, self.mu, self.w, q, N)
-                    # Ag = np.zeros_like(self.Q,dtype=np.cfloat)
+                    # Ag = np.zeros_like(self.Q,dtype=np.complex128)
                         i = 0
                         Ag = 0
                         Vn = 0
-                        V = np.zeros([self.NumNosC,1],dtype = np.cfloat)
+                        V = np.zeros([self.NumNosC,1],dtype = np.complex128)
                         
                         for bl in np.sort([*self.mu]):
                             Ag += self.A[i]*self.mu[bl].ravel()[N]#/(self.rho0*self.c0)
@@ -1380,7 +1380,7 @@ class FEM3D:
                 self.q = csc_matrix(self.q)
                 for N in tqdm(range(len(self.freq))):
                     # ps = solve_damped_system(self.Q, self.H, self.A, self.number_ID_faces, self.mu, self.w, q, N)
-                    # Ag = np.zeros_like(self.Q,dtype=np.cfloat)
+                    # Ag = np.zeros_like(self.Q,dtype=np.complex128)
                     i = 0
                     Ag = 0
                     for bl in self.number_ID_faces:
