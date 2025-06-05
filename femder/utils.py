@@ -598,7 +598,7 @@ class IR(object):
         An array of approximate time values at the given time steps.
         
         """
-        from scipy.signal import butter, freqz, tukey
+        from scipy.signal import butter, freqz
         from scipy.fftpack import ifft
         
         b_high, a_high = butter(
@@ -627,7 +627,7 @@ class IR(object):
         #              self.high_pass_frequency - self.minimum_frequency]) /
         #         (self.maximum_frequency - self.minimum_frequency))
 
-        windowed_values = butter_filtered_values * tukey(len(self.filtered_frequencies), alpha=self._alpha)
+        windowed_values = butter_filtered_values * win.tukey(len(self.filtered_frequencies), alpha=self._alpha)
 
         full_frequency_values = np.zeros(self.number_of_frequencies, dtype='complex128')
         full_frequency_values[self._frequency_filter_indices] = windowed_values
